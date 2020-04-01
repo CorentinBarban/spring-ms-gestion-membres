@@ -1,0 +1,14 @@
+# nom de l'application
+spring:
+  application:
+    name: gestionmembre
+  datasource:
+    url: jdbc:mysql://localhost:3306/ebank?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: create-drop
+server:
+  port: 8088
