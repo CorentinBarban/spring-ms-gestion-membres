@@ -8,7 +8,8 @@ import java.util.List;
 
 
 @Entity
-public class Membre extends Utilisateur {
+@Inheritance
+public abstract class Membre extends Utilisateur {
 
     @Temporal(TemporalType.DATE)
     private Date dateCertificat;

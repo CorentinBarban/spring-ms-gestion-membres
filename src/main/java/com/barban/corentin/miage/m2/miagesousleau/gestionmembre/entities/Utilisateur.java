@@ -5,17 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
 @Entity
-public class Utilisateur {
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="user_type",discriminatorType = DiscriminatorType.STRING)
+public abstract class Utilisateur {
 
     @Id
     private Long idUtilisateur;
