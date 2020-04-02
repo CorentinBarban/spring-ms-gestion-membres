@@ -1,15 +1,15 @@
 package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="user_type",discriminatorType = DiscriminatorType.STRING)

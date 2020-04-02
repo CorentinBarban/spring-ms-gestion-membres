@@ -1,5 +1,7 @@
 package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,17 +21,14 @@ public class Paiement {
     @Id
     private Long idPaiement;
 
-    @NotNull
     private String iban;
 
-    @NotNull
     private Double somme;
 
-    @NotNull
     @Temporal(TemporalType.DATE)
     private Date datePaiement;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("listePaiement")
     private Membre membre;
 }
