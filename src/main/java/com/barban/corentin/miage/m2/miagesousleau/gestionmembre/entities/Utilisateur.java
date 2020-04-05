@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
