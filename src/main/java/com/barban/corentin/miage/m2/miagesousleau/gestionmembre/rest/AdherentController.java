@@ -2,11 +2,15 @@ package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.rest;
 
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Enseignant;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Adherent;
+import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Membre;
+import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.UtilisateurNotFoundException;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services.GestionUtilisateurMetier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -31,9 +35,25 @@ public class AdherentController {
         return this.gestionUtilisateurMetier.listerAdherent();
     }
 
+    @GetMapping(path = "/{id}")
+    public Membre getAdherent(@PathVariable("id") Long idAdherent) {
+        logger.info("Lister les informations d'un adherent");
+        try {
+            return this.gestionUtilisateurMetier.getMembre(idAdherent);
+        } catch (UtilisateurNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Adhérent Not Found", e);
+        }
+    }
+
     @PutMapping(path = "/{id}")
-    public Optional<Adherent> updateEnseignant(@PathVariable("id") Long id, @RequestBody final Adherent newAdherent){
+    public Optional<Adherent> updateAdherent(@PathVariable("id") Long id, @RequestBody final Adherent newAdherent){
         logger.info("Mise à jour des informations de l'adherent");
-        return this.gestionUtilisateurMetier.majAdherent(id,newAdherent);
+        try {
+            return this.gestionUtilisateurMetier.majAdherent(id,newAdherent);
+        } catch (UtilisateurNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Adhérent Not Found", e);
+        }
     }
 }

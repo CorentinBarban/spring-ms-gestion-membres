@@ -7,5 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface UtilisateurBaseRepository<T extends Utilisateur> extends CrudRepository<T,Long> {
+
+
 }
 

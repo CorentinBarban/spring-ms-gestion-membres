@@ -19,6 +19,7 @@ import java.util.Date;
 public class Paiement {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaiement;
 
     private String iban;
