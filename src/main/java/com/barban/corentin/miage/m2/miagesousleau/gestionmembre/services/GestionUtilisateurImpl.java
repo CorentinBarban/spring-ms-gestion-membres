@@ -3,9 +3,14 @@ package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.*;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.UtilisateurNotFoundException;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.repository.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Service
@@ -29,6 +34,11 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
     @Autowired
     AdherentRepository adherentRepository;
 
+    @PersistenceContext
+    EntityManager em;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Override
     public President creerPresident(President president) {
@@ -60,14 +70,14 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
         }
     }
 
-    @Override
-    public Membre getMembre(Long idMembre) throws UtilisateurNotFoundException {
-        if (this.membreRepository.existsById(idMembre)) {
-            return this.membreRepository.findById(idMembre).get();
-        } else {
-            throw new UtilisateurNotFoundException("Le membre n'existe pas");
-        }
-    }
+//    @Override
+//    public Membre getMembre(Long idMembre) throws UtilisateurNotFoundException {
+//        if (this.membreRepository.existsById(idMembre)) {
+//            return this.membreRepository.findById(idMembre).get();
+//        } else {
+//            throw new UtilisateurNotFoundException("Le membre n'existe pas");
+//        }
+//    }
 
     @Override
     public Iterable<Utilisateur> listerUtilisateurs() {
@@ -92,7 +102,7 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
     @Override
     public Optional<Enseignant> majEnseignant(Long idEnseignant, Enseignant newEnseignant) throws UtilisateurNotFoundException {
         try {
-            this.getMembre(idEnseignant);
+            this.getUtilisateur(idEnseignant);
             return this.enseignantRepository.findById(idEnseignant)
                     .map(enseignant -> {
                         if (newEnseignant.getDateCertificat() != null) {
@@ -123,7 +133,7 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
     @Override
     public Optional<Adherent> majAdherent(Long idAdherent, Adherent newAdherent) throws UtilisateurNotFoundException {
         try {
-            this.getMembre(idAdherent);
+            this.getUtilisateur(idAdherent);
             return this.adherentRepository.findById(idAdherent)
                     .map(adherent -> {
                         if (newAdherent.getDateCertificat() != null) {
@@ -152,8 +162,51 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
     }
 
     @Override
-    public String obtenirEtatInscription(Membre membre) throws UtilisateurNotFoundException {
-        return membre.getEtatInscription().toString();
+    public String obtenirEtatInscription(Long idMembre) throws UtilisateurNotFoundException {
+        try {
+            Membre m = (Membre) this.getUtilisateur(idMembre);
+            return m.getEtatInscription().toString();
+        } catch (UtilisateurNotFoundException exp) {
+            throw new UtilisateurNotFoundException("L'adhérent n'existe pas");
+        }
+
+    }
+
+    @Override
+    public Membre changerStatut(Long idMembre, String targetClass) throws UtilisateurNotFoundException {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Membre membre = (Membre) this.getUtilisateur(idMembre);
+            TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+            switch (targetClass) {
+                case "ADHERENT":
+                    transactionTemplate.execute(transactionStatus -> {
+                        em.createQuery("UPDATE Utilisateur SET user_type = ?1 WHERE id_utilisateur = ?2")
+                                .setParameter(1, "Adherent")
+                                .setParameter(2, idMembre)
+                                .executeUpdate();
+                        transactionStatus.flush();
+                        return null;
+                    });
+                    break;
+                case "ENSEIGNANT":
+
+                    transactionTemplate.execute(transactionStatus -> {
+                        em.createQuery("UPDATE Utilisateur SET user_type = ?1 WHERE id_utilisateur = ?2")
+                                .setParameter(1, "Enseignant")
+                                .setParameter(2, idMembre)
+                                .executeUpdate();
+                        transactionStatus.flush();
+                        return null;
+                    });
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
+            return membre;
+        } catch (UtilisateurNotFoundException e) {
+            throw new UtilisateurNotFoundException("L'adhérent n'existe pas");
+        }
     }
 
 }

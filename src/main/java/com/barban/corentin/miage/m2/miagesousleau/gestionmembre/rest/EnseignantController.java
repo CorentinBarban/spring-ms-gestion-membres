@@ -42,10 +42,10 @@ public class EnseignantController {
     }
 
     @GetMapping(path = "/{id}")
-    public Membre getEnseignant(@PathVariable("id") Long idEnseignant) {
+    public Enseignant getEnseignant(@PathVariable("id") Long idEnseignant) {
         logger.info("Lister les informations d'un enseignant");
         try {
-            return this.gestionUtilisateurMetier.getMembre(idEnseignant);
+            return (Enseignant) this.gestionUtilisateurMetier.getUtilisateur(idEnseignant);
         } catch (UtilisateurNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Enseignant Not Found", e);

@@ -1,5 +1,6 @@
 package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @Entity
 @Inheritance
+@NamedNativeQuery(name="Customer.changeCustomerType",
+        query="UPDATE utilisateur SET user_type = ? WHERE id_utilisateur = ?")
 public class Membre extends Utilisateur {
 
     @Temporal(TemporalType.DATE)
@@ -36,6 +39,7 @@ public class Membre extends Utilisateur {
     private StatutInscription etatInscription;
 
     @OneToMany(mappedBy = "membre")
+    @JsonIgnoreProperties("membre")
     private List<Paiement> listePaiement;
 
     @Builder(builderMethodName = "membreBuilder")

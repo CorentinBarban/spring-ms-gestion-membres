@@ -25,7 +25,7 @@ public class AdherentController {
 
     @PostMapping(path = "")
     public Adherent postAdherent(@RequestBody Adherent adherent) {
-        logger.info("Creation d'un nouveau participant : " + adherent);
+        logger.info("Creation d'un nouvel adhérent : " + adherent);
         return this.gestionUtilisateurMetier.creerAdherent(adherent);
     }
 
@@ -36,10 +36,10 @@ public class AdherentController {
     }
 
     @GetMapping(path = "/{id}")
-    public Membre getAdherent(@PathVariable("id") Long idAdherent) {
+    public Adherent getAdherent(@PathVariable("id") Long idAdherent) {
         logger.info("Lister les informations d'un adherent");
         try {
-            return this.gestionUtilisateurMetier.getMembre(idAdherent);
+            return (Adherent) this.gestionUtilisateurMetier.getUtilisateur(idAdherent);
         } catch (UtilisateurNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Adhérent Not Found", e);
