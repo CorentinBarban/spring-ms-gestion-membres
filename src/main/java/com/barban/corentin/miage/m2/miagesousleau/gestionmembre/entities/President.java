@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -11,10 +13,10 @@ import javax.persistence.Entity;
 @ToString(callSuper = true)
 @Entity
 @DiscriminatorValue("President")
-public class President extends Utilisateur {
+public class President extends Membre {
 
     @Builder(builderMethodName = "presidentBuilder")
-    public President(Long idUtilisateur, String nom, String prenom, String adresseMail, String login, String password, String villeResidence, String paysResidence) {
-        super(idUtilisateur, nom, prenom, adresseMail, login, password, villeResidence, paysResidence);
+    public President(Long idMembre, String nom, String prenom, String adresseMail, String login, String password, String villeResidence, String paysResidence, Date dateCertificat, int niveauPlonge, String numLicence, StatutPaiement etatPaiement, StatutAptitude etatAptitude, StatutInscription etatInscription, List<Paiement> listePaiement) {
+        super(idMembre, nom, prenom, adresseMail, login, password, villeResidence, paysResidence, dateCertificat,niveauPlonge,numLicence,etatPaiement,etatAptitude,etatInscription,listePaiement);
     }
 }

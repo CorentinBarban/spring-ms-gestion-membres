@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -13,12 +14,34 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Entity
-@Inheritance
-@NamedNativeQuery(name="Customer.changeCustomerType",
-        query="UPDATE utilisateur SET user_type = ? WHERE id_utilisateur = ?")
-public class Membre extends Utilisateur {
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="membre_type",discriminatorType = DiscriminatorType.STRING)
+public class Membre {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idMembre;
+
+    @NotNull
+    private String nom;
+
+    @NotNull
+    private String prenom;
+
+    @NotNull
+    private String adresseMail;
+
+    @NotNull
+    private String login;
+
+    @NotNull
+    private String password;
+
+    @NotNull
+    private String villeResidence;
+
+    @NotNull
+    private String paysResidence;
 
     @Temporal(TemporalType.DATE)
     private Date dateCertificat;
@@ -42,15 +65,5 @@ public class Membre extends Utilisateur {
     @JsonIgnoreProperties("membre")
     private List<Paiement> listePaiement;
 
-    @Builder(builderMethodName = "membreBuilder")
-    public Membre(Long idUtilisateur, String nom, String prenom, String adresseMail, String login, String password, String villeResidence, String paysResidence, Date dateCertificat, String numLicence, StatutPaiement etatPaiement, StatutAptitude etatAptitude, StatutInscription etatInscription,List<Paiement> listePaiement) {
-        super(idUtilisateur, nom, prenom, adresseMail, login, password, villeResidence, paysResidence);
-        this.dateCertificat = dateCertificat;
-        this.numLicence = numLicence;
-        this.etatAptitude = etatAptitude;
-        this.etatPaiement = etatPaiement;
-        this.etatInscription = etatInscription;
-        this.listePaiement = listePaiement;
-    }
 
 }

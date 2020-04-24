@@ -1,7 +1,7 @@
 package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services;
 
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.*;
-import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.UtilisateurNotFoundException;
+import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.MembreNotFoundException;
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,10 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Service
-public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
+public class GestionMembreImpl implements GestionMembreMetier {
 
     @Autowired
-    UtilisateurRepository utilisateurRepository;
-
-    @Autowired
-    MembreRepository<Membre> membreRepository;
+    MembreRepository membreRepository;
 
     @Autowired
     SecretaireRepository secretaireRepository;
@@ -62,27 +59,14 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
 
 
     @Override
-    public Utilisateur getUtilisateur(Long idUtilisateur) throws UtilisateurNotFoundException {
-        if (this.utilisateurRepository.existsById(idUtilisateur)) {
-            return this.utilisateurRepository.findById(idUtilisateur).get();
+    public Membre getMembre(Long idMembre) throws MembreNotFoundException {
+        if (this.membreRepository.existsById(idMembre)) {
+            return this.membreRepository.findById(idMembre).get();
         } else {
-            throw new UtilisateurNotFoundException("L'utilisateur n'existe pas");
+            throw new MembreNotFoundException("Le membre n'existe pas");
         }
     }
 
-//    @Override
-//    public Membre getMembre(Long idMembre) throws UtilisateurNotFoundException {
-//        if (this.membreRepository.existsById(idMembre)) {
-//            return this.membreRepository.findById(idMembre).get();
-//        } else {
-//            throw new UtilisateurNotFoundException("Le membre n'existe pas");
-//        }
-//    }
-
-    @Override
-    public Iterable<Utilisateur> listerUtilisateurs() {
-        return this.utilisateurRepository.findAll();
-    }
 
     @Override
     public Iterable<Membre> listerMembres() {
@@ -100,9 +84,9 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
     }
 
     @Override
-    public Optional<Enseignant> majEnseignant(Long idEnseignant, Enseignant newEnseignant) throws UtilisateurNotFoundException {
+    public Optional<Enseignant> majEnseignant(Long idEnseignant, Enseignant newEnseignant) throws MembreNotFoundException {
         try {
-            this.getUtilisateur(idEnseignant);
+            this.getMembre(idEnseignant);
             return this.enseignantRepository.findById(idEnseignant)
                     .map(enseignant -> {
                         if (newEnseignant.getDateCertificat() != null) {
@@ -125,15 +109,15 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
                         }
                         return this.enseignantRepository.save(enseignant);
                     });
-        } catch (UtilisateurNotFoundException exp) {
-            throw new UtilisateurNotFoundException("L'enseignant n'existe pas");
+        } catch (MembreNotFoundException exp) {
+            throw new MembreNotFoundException("L'enseignant n'existe pas");
         }
     }
 
     @Override
-    public Optional<Adherent> majAdherent(Long idAdherent, Adherent newAdherent) throws UtilisateurNotFoundException {
+    public Optional<Adherent> majAdherent(Long idAdherent, Adherent newAdherent) throws MembreNotFoundException {
         try {
-            this.getUtilisateur(idAdherent);
+            this.getMembre(idAdherent);
             return this.adherentRepository.findById(idAdherent)
                     .map(adherent -> {
                         if (newAdherent.getDateCertificat() != null) {
@@ -156,32 +140,32 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
                         }
                         return this.adherentRepository.save(adherent);
                     });
-        } catch (UtilisateurNotFoundException exp) {
-            throw new UtilisateurNotFoundException("L'adhérent n'existe pas");
+        } catch (MembreNotFoundException exp) {
+            throw new MembreNotFoundException("L'adhérent n'existe pas");
         }
     }
 
     @Override
-    public String obtenirEtatInscription(Long idMembre) throws UtilisateurNotFoundException {
+    public String obtenirEtatInscription(Long idMembre) throws MembreNotFoundException {
         try {
-            Membre m = (Membre) this.getUtilisateur(idMembre);
+            Membre m = this.getMembre(idMembre);
             return m.getEtatInscription().toString();
-        } catch (UtilisateurNotFoundException exp) {
-            throw new UtilisateurNotFoundException("L'adhérent n'existe pas");
+        } catch (MembreNotFoundException exp) {
+            throw new MembreNotFoundException("L'adhérent n'existe pas");
         }
 
     }
 
     @Override
-    public Membre changerStatut(Long idMembre, String targetClass) throws UtilisateurNotFoundException {
+    public Membre changerStatut(Long idMembre, String targetClass) throws MembreNotFoundException {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Membre membre = (Membre) this.getUtilisateur(idMembre);
+            Membre membre = this.getMembre(idMembre);
             TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
             switch (targetClass) {
                 case "ADHERENT":
                     transactionTemplate.execute(transactionStatus -> {
-                        em.createQuery("UPDATE Utilisateur SET user_type = ?1 WHERE id_utilisateur = ?2")
+                        em.createQuery("UPDATE Membre SET membre_type = ?1 WHERE id_membre = ?2")
                                 .setParameter(1, "Adherent")
                                 .setParameter(2, idMembre)
                                 .executeUpdate();
@@ -192,7 +176,7 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
                 case "ENSEIGNANT":
 
                     transactionTemplate.execute(transactionStatus -> {
-                        em.createQuery("UPDATE Utilisateur SET user_type = ?1 WHERE id_utilisateur = ?2")
+                        em.createQuery("UPDATE Membre SET membre_type = ?1 WHERE id_membre = ?2")
                                 .setParameter(1, "Enseignant")
                                 .setParameter(2, idMembre)
                                 .executeUpdate();
@@ -204,8 +188,8 @@ public class GestionUtilisateurImpl implements GestionUtilisateurMetier {
                     throw new IllegalStateException();
             }
             return membre;
-        } catch (UtilisateurNotFoundException e) {
-            throw new UtilisateurNotFoundException("L'adhérent n'existe pas");
+        } catch (MembreNotFoundException e) {
+            throw new MembreNotFoundException("L'adhérent n'existe pas");
         }
     }
 

@@ -1,53 +1,48 @@
 package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services;
 
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.*;
-import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.UtilisateurNotFoundException;
+import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.MembreNotFoundException;
 
 import java.util.Optional;
 
-public interface GestionUtilisateurMetier {
+public interface GestionMembreMetier {
 
     /**
-     * Creer un utilisateur de type président
+     * Creer un membre de type président
      * @param president
      * @return
      */
     President creerPresident(President president);
 
     /**
-     * Creer un utilisateur de type enseignant
+     * Creer un membre de type enseignant
      * @param enseignant
      * @return
      */
     Enseignant creerEnseignant(Enseignant enseignant);
 
     /**
-     * Creer un utilisateur de type secretaire
+     * Creer un membre de type secretaire
      * @param secretaire
      * @return
      */
     Secretaire creerSecretaire(Secretaire secretaire);
 
     /**
-     * Creer un utilisateur de type adherent
+     * Creer un membre de type adherent
      * @param adherent
      * @return
      */
     Adherent creerAdherent(Adherent adherent);
 
     /**
-     * Obtenir les informations d'un utilisateur
-     * @param idUtilsateur identifiant d'un utilisateur (membre, adherent, secretaire, president)
-     * @return Un utilisateur
-     * @throws UtilisateurNotFoundException
+     * Obtenir les informations d'un membre
+     * @param idMembre identifiant d'un membre (membre, adherent, secretaire, president)
+     * @return Un membre
+     * @throws MembreNotFoundException
      */
-    Utilisateur getUtilisateur(Long idUtilsateur) throws UtilisateurNotFoundException;
+    Membre getMembre(Long idMembre) throws MembreNotFoundException;
 
-    /**
-     * Lister l'ensemble des utilisateurs du système
-     * @return Liste d'utilisateur
-     */
-    Iterable<Utilisateur> listerUtilisateurs();
 
     /**
      * Lister l'ensemble des membres du système
@@ -72,32 +67,32 @@ public interface GestionUtilisateurMetier {
      * @param idEnseignant
      * @param enseignant nouvelles informations de l'enseignant
      * @return
-     * @throws UtilisateurNotFoundException
+     * @throws MembreNotFoundException
      */
-    Optional<Enseignant> majEnseignant(Long idEnseignant, Enseignant enseignant) throws UtilisateurNotFoundException;
+    Optional<Enseignant> majEnseignant(Long idEnseignant, Enseignant enseignant) throws MembreNotFoundException;
 
     /**
      * Mettre à jour les informations de l'adhérent
      * @param idAdherent
      * @param newAdherent
      * @return nouvelles informations de l'adhérent
-     * @throws UtilisateurNotFoundException
+     * @throws MembreNotFoundException
      */
-    Optional<Adherent> majAdherent(Long idAdherent, Adherent newAdherent) throws UtilisateurNotFoundException;
+    Optional<Adherent> majAdherent(Long idAdherent, Adherent newAdherent) throws MembreNotFoundException;
 
     /**
      * Obtenir l'etat de l'inscription d'un membre
      * @param idMembre
      * @return etat d'un membre {COMPLET | INCOMPLET}
-     * @throws UtilisateurNotFoundException
+     * @throws MembreNotFoundException
      */
-    String obtenirEtatInscription(Long idMembre) throws UtilisateurNotFoundException;
+    String obtenirEtatInscription(Long idMembre) throws MembreNotFoundException;
 
     /**
      * Change le statut d'un membre
      * @param idMembre
      * @return
      */
-    Membre changerStatut(Long idMembre, String targetClass) throws UtilisateurNotFoundException;
+    Membre changerStatut(Long idMembre, String targetClass) throws MembreNotFoundException;
 
 }

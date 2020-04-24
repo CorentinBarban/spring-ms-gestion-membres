@@ -3,5 +3,5 @@ import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Adheren
 import javax.transaction.Transactional;
 
 @Transactional
-public interface AdherentRepository extends MembreRepository<Adherent> {
+public interface AdherentRepository extends MembreBaseRepository<Adherent> {
 }

@@ -5,5 +5,5 @@ import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Secreta
 import javax.transaction.Transactional;
 
 @Transactional
-public interface SecretaireRepository extends UtilisateurBaseRepository<Secretaire> {
+public interface SecretaireRepository extends MembreBaseRepository<Secretaire> {
 }

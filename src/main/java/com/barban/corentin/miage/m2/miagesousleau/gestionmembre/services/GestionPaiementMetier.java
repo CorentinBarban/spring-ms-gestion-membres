@@ -2,7 +2,7 @@ package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services;
 
 
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Paiement;
-import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.UtilisateurNotFoundException;
+import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.MembreNotFoundException;
 
 public interface GestionPaiementMetier {
 
@@ -10,9 +10,9 @@ public interface GestionPaiementMetier {
      * Payer la cotisation d'un membre
      * @param paiement
      * @return
-     * @throws UtilisateurNotFoundException
+     * @throws MembreNotFoundException
      */
-    Paiement payerCotisation(Paiement paiement) throws UtilisateurNotFoundException;
+    Paiement payerCotisation(Paiement paiement) throws MembreNotFoundException;
 
     /**
      * Obtenir le solde de la miage sous l'eau
