@@ -38,7 +38,7 @@ public class MembreController {
             return (Membre) this.gestionMembreMetier.getMembre(idMembre);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Membre Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
@@ -49,7 +49,7 @@ public class MembreController {
             return this.gestionMembreMetier.obtenirEtatInscription(idMembre);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Membre Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
@@ -60,7 +60,7 @@ public class MembreController {
             return this.gestionMembreMetier.changerStatut(idMembre,targetStatut);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Membre Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 }

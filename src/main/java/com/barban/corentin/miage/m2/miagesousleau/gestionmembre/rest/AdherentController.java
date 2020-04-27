@@ -40,7 +40,7 @@ public class AdherentController {
             return (Adherent) this.gestionMembreMetier.getMembre(idAdherent);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Adhérent Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class AdherentController {
             return this.gestionMembreMetier.majAdherent(id,newAdherent);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Adhérent Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 }

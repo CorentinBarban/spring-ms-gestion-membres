@@ -44,18 +44,18 @@ public class EnseignantController {
             return (Enseignant) this.gestionMembreMetier.getMembre(idEnseignant);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Enseignant Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
     @PutMapping(path = "/{id}")
-    public Optional<Enseignant> updateEnseignant(@PathVariable("id") Long id, @RequestBody final Enseignant newEnseignant){
+    public Optional<Enseignant> updateEnseignant(@PathVariable("id") Long id, @RequestBody Enseignant newEnseignant){
         logger.info("Mise à jour des informations de l'enseignant");
         try {
             return this.gestionMembreMetier.majEnseignant(id,newEnseignant);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Enseignant Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 }

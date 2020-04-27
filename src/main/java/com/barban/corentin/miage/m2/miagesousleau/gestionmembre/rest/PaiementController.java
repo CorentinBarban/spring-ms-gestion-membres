@@ -31,7 +31,7 @@ public class PaiementController {
             return this.gestionPaiementMetier.payerCotisation(paiement);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Membre Not Found", e);
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
