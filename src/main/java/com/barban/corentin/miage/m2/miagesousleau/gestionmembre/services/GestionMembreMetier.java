@@ -9,6 +9,7 @@ public interface GestionMembreMetier {
 
     /**
      * Creer un membre de type président
+     *
      * @param president
      * @return
      */
@@ -16,6 +17,7 @@ public interface GestionMembreMetier {
 
     /**
      * Creer un membre de type enseignant
+     *
      * @param enseignant
      * @return
      */
@@ -23,6 +25,7 @@ public interface GestionMembreMetier {
 
     /**
      * Creer un membre de type secretaire
+     *
      * @param secretaire
      * @return
      */
@@ -30,6 +33,7 @@ public interface GestionMembreMetier {
 
     /**
      * Creer un membre de type adherent
+     *
      * @param adherent
      * @return
      */
@@ -37,6 +41,7 @@ public interface GestionMembreMetier {
 
     /**
      * Obtenir les informations d'un membre
+     *
      * @param idMembre identifiant d'un membre (membre, adherent, secretaire, president)
      * @return Un membre
      * @throws MembreNotFoundException
@@ -46,26 +51,30 @@ public interface GestionMembreMetier {
 
     /**
      * Lister l'ensemble des membres du système
+     *
      * @return Liste de membre
      */
     Iterable<Membre> listerMembres();
 
     /**
      * Lister l'ensemble des enseignants du système
+     *
      * @return
      */
     Iterable<Enseignant> listerEnseignant();
 
     /**
      * Lister l'ensemble des adherents du système
+     *
      * @return
      */
     Iterable<Adherent> listerAdherent();
 
     /**
      * Mettre à jour les informations de l'enseignant
+     *
      * @param idEnseignant
-     * @param enseignant nouvelles informations de l'enseignant
+     * @param enseignant   nouvelles informations de l'enseignant
      * @return
      * @throws MembreNotFoundException
      */
@@ -73,6 +82,7 @@ public interface GestionMembreMetier {
 
     /**
      * Mettre à jour les informations de l'adhérent
+     *
      * @param idAdherent
      * @param newAdherent
      * @return nouvelles informations de l'adhérent
@@ -82,6 +92,7 @@ public interface GestionMembreMetier {
 
     /**
      * Obtenir l'etat de l'inscription d'un membre
+     *
      * @param idMembre
      * @return etat d'un membre {COMPLET | INCOMPLET}
      * @throws MembreNotFoundException
@@ -90,6 +101,7 @@ public interface GestionMembreMetier {
 
     /**
      * Change le statut d'un membre
+     *
      * @param idMembre
      * @return
      */

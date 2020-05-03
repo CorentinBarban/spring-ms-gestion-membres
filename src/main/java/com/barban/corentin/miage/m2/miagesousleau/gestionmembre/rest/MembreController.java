@@ -43,7 +43,7 @@ public class MembreController {
     }
 
     @GetMapping(path = "/{id}/inscription")
-    public String getStatutInscription(@PathVariable("id") Long idMembre){
+    public String getStatutInscription(@PathVariable("id") Long idMembre) {
         logger.info("Fournir le statut de l'inscription");
         try {
             return this.gestionMembreMetier.obtenirEtatInscription(idMembre);
@@ -54,10 +54,10 @@ public class MembreController {
     }
 
     @PutMapping(path = "/{id}")
-    public Membre getStatutInscription(@PathVariable("id") Long idMembre ,@RequestParam("statut") String targetStatut){
+    public Membre getStatutInscription(@PathVariable("id") Long idMembre, @RequestParam("statut") String targetStatut) {
         logger.info("Changer le type d'un membre");
         try {
-            return this.gestionMembreMetier.changerStatut(idMembre,targetStatut);
+            return this.gestionMembreMetier.changerStatut(idMembre, targetStatut);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, e.getMessage(), e);

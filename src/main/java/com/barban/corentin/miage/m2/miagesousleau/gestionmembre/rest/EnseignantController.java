@@ -49,10 +49,10 @@ public class EnseignantController {
     }
 
     @PutMapping(path = "/{id}")
-    public Optional<Enseignant> updateEnseignant(@PathVariable("id") Long id, @RequestBody Enseignant newEnseignant){
+    public Optional<Enseignant> updateEnseignant(@PathVariable("id") Long id, @RequestBody Enseignant newEnseignant) {
         logger.info("Mise à jour des informations de l'enseignant");
         try {
-            return this.gestionMembreMetier.majEnseignant(id,newEnseignant);
+            return this.gestionMembreMetier.majEnseignant(id, newEnseignant);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, e.getMessage(), e);

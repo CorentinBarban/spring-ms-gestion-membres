@@ -7,5 +7,5 @@ import javax.transaction.Transactional;
 
 
 @Transactional
-public interface MembreRepository extends MembreBaseRepository<Membre>{
+public interface MembreRepository extends MembreBaseRepository<Membre> {
 }

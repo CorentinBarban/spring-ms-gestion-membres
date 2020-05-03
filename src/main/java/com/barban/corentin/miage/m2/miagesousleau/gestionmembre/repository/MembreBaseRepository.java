@@ -6,7 +6,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 
 @NoRepositoryBean
-public interface MembreBaseRepository<T extends Membre> extends CrudRepository<T,Long> {
+public interface MembreBaseRepository<T extends Membre> extends CrudRepository<T, Long> {
 
 }
 

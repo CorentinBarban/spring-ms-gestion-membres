@@ -45,10 +45,10 @@ public class AdherentController {
     }
 
     @PutMapping(path = "/{id}")
-    public Optional<Adherent> updateAdherent(@PathVariable("id") Long id, @RequestBody final Adherent newAdherent){
+    public Optional<Adherent> updateAdherent(@PathVariable("id") Long id, @RequestBody final Adherent newAdherent) {
         logger.info("Mise à jour des informations de l'adherent");
         try {
-            return this.gestionMembreMetier.majAdherent(id,newAdherent);
+            return this.gestionMembreMetier.majAdherent(id, newAdherent);
         } catch (MembreNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, e.getMessage(), e);

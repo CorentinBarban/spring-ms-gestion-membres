@@ -8,6 +8,7 @@ public interface GestionPaiementMetier {
 
     /**
      * Payer la cotisation d'un membre
+     *
      * @param paiement
      * @return
      * @throws MembreNotFoundException
@@ -16,6 +17,7 @@ public interface GestionPaiementMetier {
 
     /**
      * Obtenir le solde de la miage sous l'eau
+     *
      * @return
      */
     Double obtenirSolde();

@@ -15,8 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="membre_type",discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "membre_type", discriminatorType = DiscriminatorType.STRING)
 public class Membre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

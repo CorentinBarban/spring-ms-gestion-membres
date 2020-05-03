@@ -5,5 +5,5 @@ import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities.Enseign
 import javax.transaction.Transactional;
 
 @Transactional
-public interface EnseignantRepository extends MembreBaseRepository<Enseignant>{
+public interface EnseignantRepository extends MembreBaseRepository<Enseignant> {
 }
