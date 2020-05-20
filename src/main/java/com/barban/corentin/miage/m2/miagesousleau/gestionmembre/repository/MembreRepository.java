@@ -8,4 +8,6 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface MembreRepository extends MembreBaseRepository<Membre> {
+
+
 }
