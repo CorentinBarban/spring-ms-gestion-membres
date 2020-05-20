@@ -6,6 +6,7 @@ import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.services.Gestion
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,7 @@ public class PresidentController {
         return this.gestionMembreMetier.creerPresident(president);
     }
 
+    @PreAuthorize("#oauth2.hasScope('write') and hasRole('ROLE_PRESIDENT')")
     @GetMapping(path = "/solde")
     public Double getSoldeAssociation() {
         logger.info("Connaitre le solde de miage sous l'eau ");

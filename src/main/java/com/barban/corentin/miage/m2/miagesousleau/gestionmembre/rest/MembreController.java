@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,8 +54,9 @@ public class MembreController {
         }
     }
 
+    @PreAuthorize("#oauth2.hasScope('write') and hasRole('ROLE_SECRETAIRE')")
     @PutMapping(path = "/{id}")
-    public Membre getStatutInscription(@PathVariable("id") Long idMembre, @RequestParam("statut") String targetStatut) {
+    public Membre updateStatutMembre(@PathVariable("id") Long idMembre, @RequestParam("statut") String targetStatut) {
         logger.info("Changer le type d'un membre");
         try {
             return this.gestionMembreMetier.changerStatut(idMembre, targetStatut);

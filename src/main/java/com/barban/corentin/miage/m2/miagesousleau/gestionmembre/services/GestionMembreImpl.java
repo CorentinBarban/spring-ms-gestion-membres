@@ -5,6 +5,7 @@ import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.exceptions.Membr
 import com.barban.corentin.miage.m2.miagesousleau.gestionmembre.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -35,25 +36,36 @@ public class GestionMembreImpl implements GestionMembreMetier {
     EntityManager em;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private PlatformTransactionManager transactionManager;
 
     @Override
     public President creerPresident(President president) {
+        String hashPwd = passwordEncoder.encode(president.getPassword());
+        president.setPassword(hashPwd);
         return this.presidentRepository.save(president);
     }
 
     @Override
     public Enseignant creerEnseignant(Enseignant enseignant) {
+        String hashPwd = passwordEncoder.encode(enseignant.getPassword());
+        enseignant.setPassword(hashPwd);
         return this.enseignantRepository.save(enseignant);
     }
 
     @Override
     public Secretaire creerSecretaire(Secretaire secretaire) {
+        String hashPwd = passwordEncoder.encode(secretaire.getPassword());
+        secretaire.setPassword(hashPwd);
         return this.secretaireRepository.save(secretaire);
     }
 
     @Override
     public Adherent creerAdherent(Adherent adherent) {
+        String hashPwd = passwordEncoder.encode(adherent.getPassword());
+        adherent.setPassword(hashPwd);
         return this.adherentRepository.save(adherent);
     }
 

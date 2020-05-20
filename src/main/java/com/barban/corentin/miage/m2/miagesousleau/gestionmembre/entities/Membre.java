@@ -2,6 +2,7 @@ package com.barban.corentin.miage.m2.miagesousleau.gestionmembre.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -35,6 +36,7 @@ public class Membre {
     private String login;
 
     @NotNull
+    @Column(length = 100)
     private String password;
 
     @NotNull
@@ -65,5 +67,6 @@ public class Membre {
     @JsonIgnoreProperties("membre")
     private List<Paiement> listePaiement;
 
+    private Boolean enabled = true;
 
 }
