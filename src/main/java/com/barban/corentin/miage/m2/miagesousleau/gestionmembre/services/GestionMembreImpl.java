@@ -69,7 +69,6 @@ public class GestionMembreImpl implements GestionMembreMetier {
         return this.adherentRepository.save(adherent);
     }
 
-
     @Override
     public Membre getMembre(Long idMembre) throws MembreNotFoundException {
         if (this.membreRepository.existsById(idMembre)) {
@@ -78,7 +77,6 @@ public class GestionMembreImpl implements GestionMembreMetier {
             throw new MembreNotFoundException("Le membre n'existe pas");
         }
     }
-
 
     @Override
     public Iterable<Membre> listerMembres() {
@@ -177,9 +175,10 @@ public class GestionMembreImpl implements GestionMembreMetier {
             switch (targetClass) {
                 case "ADHERENT":
                     transactionTemplate.execute(transactionStatus -> {
-                        em.createQuery("UPDATE Membre SET membre_type = ?1 WHERE id_membre = ?2")
+                        em.createQuery("UPDATE Membre SET membre_type = ?1, role = ?3 WHERE id_membre = ?2")
                                 .setParameter(1, "Adherent")
                                 .setParameter(2, idMembre)
+                                .setParameter(3, "ROLE_ADHERENT")
                                 .executeUpdate();
                         transactionStatus.flush();
                         return null;
@@ -188,9 +187,10 @@ public class GestionMembreImpl implements GestionMembreMetier {
                 case "ENSEIGNANT":
 
                     transactionTemplate.execute(transactionStatus -> {
-                        em.createQuery("UPDATE Membre SET membre_type = ?1 WHERE id_membre = ?2")
+                        em.createQuery("UPDATE Membre SET membre_type = ?1, role = ?3 WHERE id_membre = ?2")
                                 .setParameter(1, "Enseignant")
                                 .setParameter(2, idMembre)
+                                .setParameter(3, "ROLE_ENSEIGNANT")
                                 .executeUpdate();
                         transactionStatus.flush();
                         return null;
