@@ -32,4 +32,6 @@ public class Paiement {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("listePaiement")
     private Membre membre;
+
+
 }

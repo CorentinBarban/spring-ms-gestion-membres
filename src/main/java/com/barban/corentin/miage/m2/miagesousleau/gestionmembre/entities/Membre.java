@@ -63,8 +63,9 @@ public class Membre {
     @Enumerated(EnumType.STRING)
     private StatutInscription etatInscription;
 
-    @OneToMany(mappedBy = "membre")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "membre")
     @JsonIgnoreProperties("membre")
+    @OrderBy(value = "datePaiement ASC")
     private List<Paiement> listePaiement;
 
     private Boolean enabled = true;
