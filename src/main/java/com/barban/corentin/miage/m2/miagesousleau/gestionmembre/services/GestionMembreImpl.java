@@ -147,7 +147,7 @@ public class GestionMembreImpl implements GestionMembreMetier {
                         if (newAdherent.getNumLicence() != null) {
                             adherent.setNumLicence(newAdherent.getNumLicence());
                         }
-                        if (newAdherent.getNiveauPlonge() != newAdherent.getNiveauPlonge() && (newAdherent.getNiveauPlonge() > 0 && newAdherent.getNiveauPlonge() <= 4)) {
+                        if (newAdherent.getNiveauPlonge() != newAdherent.getNiveauPlonge() && (newAdherent.getNiveauPlonge() > 0 && newAdherent.getNiveauPlonge() <= 5)) {
                             adherent.setNiveauPlonge(newAdherent.getNiveauPlonge());
                         }
                         return this.adherentRepository.save(adherent);
