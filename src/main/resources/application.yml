@@ -3,24 +3,23 @@ spring:
   application:
     name: gestionmembre
   datasource:
-    url: jdbc:mysql://localhost:3306/gestionMembre?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://mysql:3306/gestionmembre?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password:
+    password: root
+    initialization-mode: always
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
 logging:
   level:
     org.springframework.web: INFO
-
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:9000/eureka/
+      defaultZone: http://registration:9000/eureka/
   instance:
     prefer-ip-address: true
-    ip-address: 127.0.0.1
 
 springdoc:
   api-docs:
